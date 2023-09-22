@@ -9,9 +9,9 @@ import { SimpleMask } from './../simple-mask';
 /** Mask used on answer component */
 @Injectable()
 export class SimpleMaskDirective extends SimpleMask {
-  @Input('simpleMask') mask: string;
-  @Input() clearIfNotMatch: boolean;
-  @Input() fillWithExpected: boolean;
+  @Input('simpleMask') mask?: string;
+  @Input() clearIfNotMatch?: boolean;
+  @Input() fillWithExpected?: boolean;
 
   constructor(
     private renderer: Renderer2,
