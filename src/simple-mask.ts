@@ -7,8 +7,8 @@ export class SimpleMask {
     '*': new RegExp('[a-zA-Z0-9]'),
     '~': new RegExp('[-\+]')
   };
-  mask: string;
-  fillWithExpected: boolean;
+  mask?: string;
+  fillWithExpected?: boolean;
 
   /**
    * set new patterns
@@ -62,16 +62,16 @@ export class SimpleMask {
     if (this.fillWithExpected) {
       let i = 0;
       let prefix = true;
-      for (let j = 0; j < this.mask.length; j++) {
+      for (let j = 0; j < this.mask?.length; j++) {
         // ignore next special char
-        if (this.mask[j] === '\\') {
-          newValue += this.mask[j + 1];
+        if (this.mask?.[j] === '\\') {
+          newValue += this.mask?.[j + 1];
           j++;
           continue;
         }
         // test special char
-        if (this.isPattern(this.mask[j])) {
-          if (this.patterns[this.mask[j]].test(value[i])) {
+        if (this.isPattern(this.mask?.[j])) {
+          if (this.patterns[this.mask?.[j]].test(value[i])) {
             newValue += value[i];
             i++;
           } else {
@@ -81,8 +81,8 @@ export class SimpleMask {
           if (prefix && !value[i]) {
             return newValue;
           }
-          newValue += this.mask[j];
-          if (this.mask[j] === value[i] && prefix) {
+          newValue += this.mask?.[j];
+          if (this.mask?.[j] === value[i] && prefix) {
             i++;
           } else {
             prefix = false;
@@ -90,24 +90,24 @@ export class SimpleMask {
         }
       }
     } else {
-      for (let i = 0, j = 0; j < this.mask.length && i < value.length; i++ , j++) {
+      for (let i = 0, j = 0; j < this.mask?.length && i < value.length; i++ , j++) {
         // ignore next special char
-        if (this.mask[j] === '\\') {
-          newValue += this.mask[j + 1];
+        if (this.mask?.[j] === '\\') {
+          newValue += this.mask?.[j + 1];
           j++;
           continue;
         }
         // test special char
-        if (this.isPattern(this.mask[j])) {
-          if (this.patterns[this.mask[j]].test(value[i])) {
+        if (this.isPattern(this.mask?.[j])) {
+          if (this.patterns[this.mask?.[j]].test(value[i])) {
             newValue += value[i];
           } else {
             return newValue;
           }
         } else {
-          newValue += this.mask[j];
+          newValue += this.mask?.[j];
   
-          if (this.mask[j] !== value[i]) {
+          if (this.mask?.[j] !== value[i]) {
             i--;
           }
         }
