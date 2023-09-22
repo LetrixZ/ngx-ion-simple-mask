@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input, Injectable, Self, Renderer2 } from '@angular/core';
+import { Directive, HostListener, Injectable, Input, Renderer2, Self } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { SimpleMask } from './../simple-mask';
 
@@ -9,14 +9,14 @@ import { SimpleMask } from './../simple-mask';
 /** Mask used on answer component */
 @Injectable()
 export class SimpleMaskDirective extends SimpleMask {
-  @Input('simpleMask') mask?: string;
+  @Input('simpleMask') override mask?: string;
   @Input() clearIfNotMatch?: boolean;
-  @Input() fillWithExpected?: boolean;
+  @Input() override fillWithExpected?: boolean;
 
   constructor(
     private renderer: Renderer2,
     @Self() public ngControl?: NgControl
-  ) { 
+  ) {
     super();
   }
 

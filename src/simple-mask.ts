@@ -59,10 +59,10 @@ export class SimpleMask {
     const size = this.mask?.replace(/\\(?!\\)/g, '').length;
     value = value.substring(0, size);
 
-    if (this.fillWithExpected) {
+    if (this.fillWithExpected && this.mask) {
       let i = 0;
       let prefix = true;
-      for (let j = 0; j < this.mask?.length; j++) {
+      for (let j = 0; j < this.mask.length; j++) {
         // ignore next special char
         if (this.mask?.[j] === '\\') {
           newValue += this.mask?.[j + 1];
@@ -70,8 +70,8 @@ export class SimpleMask {
           continue;
         }
         // test special char
-        if (this.isPattern(this.mask?.[j])) {
-          if (this.patterns[this.mask?.[j]].test(value[i])) {
+        if (this.isPattern(this.mask[j])) {
+          if (this.patterns[this.mask[j]].test(value[i])) {
             newValue += value[i];
             i++;
           } else {
@@ -89,8 +89,8 @@ export class SimpleMask {
           }
         }
       }
-    } else {
-      for (let i = 0, j = 0; j < this.mask?.length && i < value.length; i++ , j++) {
+    } else if (this.mask) {
+      for (let i = 0, j = 0; j < this.mask.length && i < value.length; i++, j++) {
         // ignore next special char
         if (this.mask?.[j] === '\\') {
           newValue += this.mask?.[j + 1];
@@ -98,15 +98,15 @@ export class SimpleMask {
           continue;
         }
         // test special char
-        if (this.isPattern(this.mask?.[j])) {
-          if (this.patterns[this.mask?.[j]].test(value[i])) {
+        if (this.isPattern(this.mask[j])) {
+          if (this.patterns[this.mask[j]].test(value[i])) {
             newValue += value[i];
           } else {
             return newValue;
           }
         } else {
           newValue += this.mask?.[j];
-  
+
           if (this.mask?.[j] !== value[i]) {
             i--;
           }
